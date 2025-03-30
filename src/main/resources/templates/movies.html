@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>현재 상영 중인 영화</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="mb-4">🎬 Now Playing</h2>
+
+    <form action="/movies/search-view" method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="영화 제목 검색">
+            <button type="submit" class="btn btn-primary">검색</button>
+        </div>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col" th:each="movie : ${movies}">
+            <div class="card h-100">
+                <img th:src="'https://image.tmdb.org/t/p/w500' + ${movie.posterPath}" class="card-img-top" th:alt="${movie.title}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${movie.title}">영화 제목</h5>
+                    </a>
+                    <p class="card-text"><strong>개봉일:</strong> <span th:text="${movie.releaseDate}"></span></p>
+<!--                    <a th:href="'/movies/detail/' + ${movie.id} + '?prev=/movies/search-view?query=' + ${query}"-->
+<!--                       class="btn btn-outline-primary btn-sm">상세보기</a>-->
+                    <a th:href="'/movies/detail/' + ${movie.id} + '?prev=/movies/search-view&query=' + ${query != null ? query : ''}"
+                       class="btn btn-outline-primary btn-sm">상세보기</a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
